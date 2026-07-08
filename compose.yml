@@ -1,0 +1,30 @@
+services:
+  gazebo:
+    container_name: kapibara_mujoco
+    network_mode: host
+    image: kapibara_mujoco
+
+    privileged: true
+    tty: true
+    build:
+      dockerfile: Dockerfile
+      context: ./
+    stop_signal: SIGINT
+    stop_grace_period: 30m
+    env_file:
+      - ./env
+    volumes:
+      - ./entrypoint.sh:/entrypoint.sh:rwx
+      - /sys:/sys
+      - /etc/udev:/etc/udev
+      - /run/udev:/run/udev
+      - /run/dbus/:/run/dbus
+      - /dev:/dev
+
+    devices:
+      - "/dev/dri/:/dev/dri/"
+      - /dev/snd:/dev/snd
+
+    group_add:
+      - video
+      - dialout
