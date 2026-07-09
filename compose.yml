@@ -15,6 +15,7 @@ services:
       - ./env
     volumes:
       - ./entrypoint.sh:/entrypoint.sh:rwx
+      - ./resources:/app/resources:ro
       - /sys:/sys
       - /etc/udev:/etc/udev
       - /run/udev:/run/udev
