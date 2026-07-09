@@ -15,7 +15,9 @@ RUN apt install -y git ros-humble-ros-base \
         ros-humble-joint-state-publisher-gui \
         ros-humble-controller-manager \
         ros-humble-rqt-image-view \
+        ros-humble-image-transport \
         ros-humble-image-transport-plugins \
+        ros-humble-camera-info-manager \
         ros-humble-compressed-image-transport \
         ros-humble-ros2-control \
         ros-humble-hardware-interface \
@@ -24,6 +26,7 @@ RUN apt install -y git ros-humble-ros-base \
         ros-humble-xacro \
         ros-humble-mqtt-client \
         ros-humble-mujoco-ros2-control \
+        ros-humble-mujoco-ros2-control-plugins \
         python3-numpy
 
 RUN echo "source /opt/ros/humble/setup.bash" >> /root/.bashrc
