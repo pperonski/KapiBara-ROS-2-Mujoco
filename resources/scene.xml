@@ -1,21 +1,52 @@
 <mujoco model="scene">
-  <statistic center="0.4 0 0.4" extent="1"/>
+<asset>
+        <texture name="hardwood_tex" type="2d" builtin="checker" rgb1=".25 .15 .05" rgb2=".4 .25 .1" width="50" height="50"/>
+        <texture name="rug_tex" type="2d" builtin="checker" rgb1=".7 .6 .5" rgb2=".8 .7 .6" width="20" height="20"/>
+        <texture name="tile_tex" type="2d" builtin="checker" rgb1=".8 .8 .8" rgb2=".9 .9 .9" width="10" height="10"/>
+        
+        <material name="hardwood" texture="hardwood_tex" texrepeat="2 2"/>
+        <material name="rug" texture="rug_tex" texrepeat="5 5"/>
+        <material name="tile" texture="tile_tex" texrepeat="4 4"/>
+        <material name="wall_mat" rgba="0.95 0.95 0.9 1"/>
+        <material name="furniture_mat" rgba="0.3 0.2 0.1 1"/>
+    </asset>
 
-  <visual>
-    <headlight diffuse="0.6 0.6 0.6" ambient="0.1 0.1 0.1" specular="0 0 0"/>
-    <rgba haze="0.15 0.25 0.35 1"/>
-    <global azimuth="120" elevation="-20"/>
-  </visual>
+    <worldbody>
+        <light directional="true" diffuse=".7 .7 .7" specular="0.2 0.2 0.2" pos="0 0 6" dir="0 0 -1" castshadow="true"/>
+        <light mode="targetbody" target="robot_spawn" diffuse=".3 .3 .3" pos="0 0 4"/>
 
-  <asset>
-    <texture type="skybox" builtin="gradient" rgb1="0.3 0.5 0.7" rgb2="0 0 0" width="512" height="3072"/>
-    <texture type="2d" name="groundplane" builtin="checker" mark="edge" rgb1="0.2 0.3 0.4" rgb2="0.1 0.2 0.3"
-      markrgb="0.8 0.8 0.8" width="300" height="300"/>
-    <material name="groundplane" texture="groundplane" texuniform="true" texrepeat="5 5"/>
-  </asset>
+        <geom name="floor_living" type="box" size="3 5 0.01" pos="-2 0 -0.01" material="hardwood" condim="3" friction="0.6 0.005 0.0001"/>
+        <geom name="floor_kitchen" type="box" size="2 2.5 0.01" pos="3 -2.5 -0.01" material="tile" condim="3" friction="0.4 0.005 0.0001"/>
+        <geom name="floor_bedroom" type="box" size="2 2.5 0.01" pos="3 2.5 -0.01" material="hardwood" condim="3" friction="0.6 0.005 0.0001"/>
+        <geom name="living_room_rug" type="box" size="1.5 1.5 0.005" pos="-2 -1 0.005" material="rug" condim="3" friction="0.9 0.01 0.001"/>
 
-  <worldbody>
-    <light pos="0 0 1.5" dir="0 0 -1" directional="true"/>
-    <geom name="floor" size="0 0 0.2" type="plane" material="groundplane" contype="1" conaffinity="1"/>
-  </worldbody>
+        <geom name="ext_wall_n" type="box" size="5 0.05 1.5" pos="0 5 1.5" material="wall_mat"/>
+        <geom name="ext_wall_s" type="box" size="5 0.05 1.5" pos="0 -5 1.5" material="wall_mat"/>
+        <geom name="ext_wall_e" type="box" size="0.05 5 1.5" pos="5 0 1.5" material="wall_mat"/>
+        <geom name="ext_wall_w" type="box" size="0.05 5 1.5" pos="-5 0 1.5" material="wall_mat"/>
+
+        <geom name="kitchen_wall" type="box" size="0.05 2.5 1.5" pos="1 -2.5 1.5" material="wall_mat"/>
+        <geom name="bedroom_wall_left" type="box" size="0.05 0.8 1.5" pos="1 4.2 1.5" material="wall_mat"/>
+        <geom name="bedroom_wall_right" type="box" size="0.05 1.2 1.5" pos="1 1.2 1.5" material="wall_mat"/>
+
+        <body name="coffee_table" pos="-2 -1 0">
+            <geom type="box" size="0.6 0.4 0.02" pos="0 0 0.15" material="furniture_mat"/>
+            <geom type="cylinder" size="0.02 0.075" pos="-0.55 -0.35 0.075" material="furniture_mat"/>
+            <geom type="cylinder" size="0.02 0.075" pos="0.55 -0.35 0.075" material="furniture_mat"/>
+            <geom type="cylinder" size="0.02 0.075" pos="-0.55 0.35 0.075" material="furniture_mat"/>
+            <geom type="cylinder" size="0.02 0.075" pos="0.55 0.35 0.075" material="furniture_mat"/>
+        </body>
+
+        <body name="couch" pos="-4 2 0">
+            <geom type="box" size="0.5 1.2 0.15" pos="0 0 0.18" rgba="0.2 0.2 0.3 1"/>
+            <geom type="box" size="0.48 1.18 0.015" pos="0 0 0.015" rgba="0.1 0.1 0.1 1"/>
+        </body>
+
+        <body name="robot_spawn" pos="-2 3 0.05">
+            <freejoint name="root"/>
+            <geom type="cylinder" size="0.175 0.04" rgba="0.1 0.1 0.1 1" mass="3.0"/>
+            <geom type="box" size="0.02 0.12 0.03" pos="0.15 0 0" rgba="0.8 0.1 0.1 1"/>
+        </body>
+
+    </worldbody>
 </mujoco>

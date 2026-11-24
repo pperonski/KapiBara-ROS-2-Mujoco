@@ -3,6 +3,7 @@ services:
     container_name: kapibara_mujoco
     network_mode: host
     image: kapibara_mujoco
+    init: true
 
     privileged: true
     tty: true
